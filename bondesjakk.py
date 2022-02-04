@@ -31,10 +31,16 @@ def drawboard(board):
                 print(board[i][j] + ' ', end='')
 
 
+def won(board):
+    for i in range(len(board)):
+        if i == ['X', 'X', 'X'] or i == ['0', '0', '0']:
+            return True
+
+
 def clear():
     os.system('cls' if os.name == 'nt' else clear())
 
-
+"""
 def turns(start, last, board, lastplayed):
     if lastplayed != None:
         start = lastplayed
@@ -71,6 +77,20 @@ def turns(start, last, board, lastplayed):
     drawboard(board)
 
     return None
+"""
+
+
+def turns(player, board):
+    drawboard(board)
+
+    pos0 = int(input('Where do you want to place vertical?'))
+    pos1 = int(input('Where do you want to place Horisontal?'))
+
+    if board[pos0-1][pos1-1] != ' ':
+        print('There is already something there. Try again')
+        time.sleep(2)
+        
+    board[pos0][pos1] = player
 
 
 def main():
@@ -92,7 +112,6 @@ def main():
 
         lastplayed = turns(start, last, board, lastplayed)
 
-    
         if ' ' not in [val for sublist in board for val in sublist]:
             break
                     
