@@ -17,6 +17,8 @@ def startplayer():
 
     return start, last
 
+#test
+
 
 def drawboard(board):
     for i in range(len(board)):
