@@ -9,7 +9,6 @@ class Game:
         self.last = last
         self.board = board
 
-
     def show_board(self):
         for i in range(len(self.board)):
             if i != 0:
@@ -21,17 +20,15 @@ class Game:
                     print(self.board[i][j])
                 else:
                     print(self.board[i][j] + ' ', end='')
-
     
-    def is_illegal(self, xaxis, yaxis):
-        if xaxis < 1 or xaxis > 3 or yaxis < 1 or yaxis > 3:
+    def is_illegal(self, x_axis, y_axis):
+        if x_axis < 1 or x_axis > 3 or y_axis < 1 or y_axis > 3:
             return True
 
-        if self.board[xaxis - 1][yaxis - 1] != ' ':
+        if self.board[x_axis - 1][y_axis - 1] != ' ':
             return True
 
         return False
-
 
     def winner(self):
         for i in range(len(self.board)):
@@ -58,24 +55,21 @@ class Game:
 
         return False
 
-
     def is_full(self):
         if ' ' not in [val for sublist in self.board for val in sublist]:
             return True
 
-
-    def promt(self):
+    def prompt(self):
         print(f'Player {self.first}')
-        y = int(input('Where do you want to place Horisontal? '))
+        y = int(input('Where do you want to place horisontal? '))
         x = int(input('Where do you want to place vertical? '))
         
         if self.is_illegal(x, y):
             print('That move is illegal. Try again')
             time.sleep(2)
-            x, y = self.promt()
+            x, y = self.prompt()
         
         return x, y
-
 
     def play_game(self):
         clear()
@@ -88,7 +82,7 @@ class Game:
             time.sleep(2)
             return False
 
-        x, y = self.promt()
+        x, y = self.prompt()
         self.board[x - 1][y - 1] = self.first
         self.show_board()
         time.sleep(2)
@@ -109,11 +103,11 @@ def main():
         ]
 
     start = random.choice(['X', '0'])
-    match start:
-        case 'X':
-            last = '0'
-        case '0':
-            last = 'X'
+
+    if start == 'X':
+        last = '0'
+    elif '0':
+        last = 'X'
 
     game = Game(start, last, board)
     clear()
@@ -122,6 +116,7 @@ def main():
 
     while game.play_game():
         print('This is useless')
+
 
 if __name__ == '__main__':
     main()
