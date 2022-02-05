@@ -1,7 +1,6 @@
 import time
 import os
 import random
-from turtle import st
 
 
 class Game:
