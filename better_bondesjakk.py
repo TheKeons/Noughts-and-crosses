@@ -53,6 +53,10 @@ class Game:
                 print(f'{self.board[0][0]} won the game')
                 return True
 
+            elif self.board[2][0] == self.board[1][1] == self.board[0][2] != ' ':
+                print(f'{self.board[2][0]} won the game')
+                return True
+
         return False
 
     def is_full(self):
@@ -81,7 +85,7 @@ class Game:
             print('Board is full. game lost')
             time.sleep(2)
             return False
-            
+
         self.show_board()
         x, y = self.prompt()
         self.board[x - 1][y - 1] = self.first
