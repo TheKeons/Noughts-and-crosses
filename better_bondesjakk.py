@@ -81,10 +81,10 @@ class Game:
             print('Board is full. game lost')
             time.sleep(2)
             return False
-
+            
+        self.show_board()
         x, y = self.prompt()
         self.board[x - 1][y - 1] = self.first
-        self.show_board()
         time.sleep(2)
         self.first, self.last = self.last, self.first
 
