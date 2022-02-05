@@ -35,8 +35,7 @@ class Game:
 
     def winner(self):
         for i in range(len(self.board)):
-            print(i)
-            time.sleep(2)
+
             if self.board[i] == ['X', 'X', 'X']:
                 print('X has won the game')
                 return True
