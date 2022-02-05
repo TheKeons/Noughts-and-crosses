@@ -35,17 +35,17 @@ class Game:
 
     def winner(self):
         for i in range(len(self.board)):
-            match i:
+            print(i)
+            time.sleep(2)
+            if self.board[i] == ['X', 'X', 'X']:
+                print('X has won the game')
+                return True
 
-                case ['X', 'X', 'X']:
-                    print('X has won the game')
-                    return True
-
-                case ['0', '0', '0']:
-                    print('0 has won the game')
-                    return True
-            
-            if [item[i] for item in self.board] == ['0', '0', '0']:
+            elif self.board[i] == ['0', '0', '0']:
+                print('0 has won the game')
+                return True
+        
+            elif [item[i] for item in self.board] == ['0', '0', '0']:
                 print('0 has won the game')
                 return True
 
@@ -53,7 +53,7 @@ class Game:
                 print('X has won the game')
                 return True
 
-            if self.board[0][0] == self.board[1][1] == self.board[2][2] != ' ':
+            elif self.board[0][0] == self.board[1][1] == self.board[2][2] != ' ':
                 print(f'{self.board[0][0]} won the game')
                 return True
 
@@ -101,24 +101,28 @@ class Game:
 def clear():
     os.system('cls' if os.name == 'nt' else clear())
 
-board = [
-    [' ', ' ', ' '],
-    [' ', ' ', ' '],
-    [' ', ' ', ' ']
-    ]
 
-start = random.choice(['X', '0'])
-match start:
-    case 'X':
-        last = '0'
-    case '0':
-        last = 'X'
+def main():
+    board = [
+        [' ', ' ', ' '],
+        [' ', ' ', ' '],
+        ['0', '0', '0']
+        ]
 
-game = Game(start, last, board)
-clear()
-print(f'{game.first} starts the game')
-input('Press enter to start')
+    start = random.choice(['X', '0'])
+    match start:
+        case 'X':
+            last = '0'
+        case '0':
+            last = 'X'
 
-while game.play_game():
-    print('smt')
+    game = Game(start, last, board)
+    clear()
+    print(f'{game.first} starts the game')
+    input('Press enter to start')
 
+    while game.play_game():
+        print('This is useless')
+
+if __name__ == '__main__':
+    main()
