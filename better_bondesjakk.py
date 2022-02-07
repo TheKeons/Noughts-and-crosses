@@ -119,7 +119,7 @@ def main():
     input('Press enter to start')
 
     while game.play_game():
-        print('This is useless')
+        pass
 
 
 if __name__ == '__main__':
