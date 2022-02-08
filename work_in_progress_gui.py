@@ -79,25 +79,25 @@ class Game:
             return
 
         self.board[row][col] = self.first
-        self.draw_figures()
+        draw_figures()
         self.first, self.last = self.last, self.first
 
         if self.is_full():
             screen.fill(background)
-            textsurface = font.render('Board is full. Game is lost :(', False, (0, 0, 0))
-            screen.blit(textsurface, (140, 270))
+            text_surface = font.render('Board is full. Game is lost :(', False, (0, 0, 0))
+            screen.blit(text_surface, (140, 270))
             return False
 
         match self.winner():
             case 'X':
                 screen.fill(background)
-                textsurface = font.render('X has won the game', False, (0, 0, 0))
-                screen.blit(textsurface, (170, 270))
+                text_surface = font.render('X has won the game', False, (0, 0, 0))
+                screen.blit(text_surface, (170, 270))
 
             case '0':
                 screen.fill(background)
-                textsurface = font.render('O has won the game', False, (0, 0, 0))
-                screen.blit(textsurface, (170, 270))
+                text_surface = font.render('O has won the game', False, (0, 0, 0))
+                screen.blit(text_surface, (170, 270))
 
             case False:
                 pass
@@ -105,7 +105,7 @@ class Game:
         return True
 
 
-def draw_figures(self):
+def draw_figures():
     for row in range(3):
         for col in range(3):
             if grid[row][col] == '0':
