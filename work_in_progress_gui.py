@@ -87,7 +87,7 @@ class Game:
         if self.is_full():
             screen.fill(background)
             textsurface = font.render('Board is full. Game is lost :(', False, (0, 0, 0))
-            screen.blit(textsurface, (0, 0, 0))
+            screen.blit(textsurface, (140, 270))
             return False
 
 
@@ -95,12 +95,12 @@ class Game:
             case 'X':
                 screen.fill(background)
                 textsurface = font.render('X has won the game', False, (0, 0, 0))
-                screen.blit(textsurface, (200, 270))
+                screen.blit(textsurface, (170, 270))
 
             case '0':
                 screen.fill(background)
                 textsurface = font.render('O has won the game', False, (0, 0, 0))
-                screen.blit(textsurface, (200, 270))
+                screen.blit(textsurface, (170, 270))
 
             case False:
                 pass
