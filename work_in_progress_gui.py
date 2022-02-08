@@ -9,6 +9,7 @@ width = 600
 height = 600
 black = (0, 0, 0)
 background = (28, 170, 156)
+square_size = 200
 
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Noughts and crosses')
@@ -109,14 +110,14 @@ def draw_figures():
     for row in range(3):
         for col in range(3):
             if grid[row][col] == '0':
-                pygame.draw.circle(screen, (255, 255, 255), (int(col * 200 + 200 // 2), int(row * 200 + 200 // 2)),
-                                   60, 15)
+                pygame.draw.circle(screen, (255, 255, 255), (int(col * square_size + square_size // 2),
+                                           int(row * square_size + square_size // 2)), 60, 15)
 
             elif grid[row][col] == 'X':
-                pygame.draw.line(screen, (0, 0, 0), (col * 200 + 55, row * 200 + 200 - 55), (col * 200 + 200 - 55,
-                                                                                             row * 200 + 55), 15)
-                pygame.draw.line(screen, (0, 0, 0), (col * 200 + 55, row * 200 + 55), (col * 200 + 200 - 55,
-                                                                                       row * 200 + 200 - 55), 15)
+                pygame.draw.line(screen, (0, 0, 0), (col * square_size + 55, row * square_size + square_size - 55),
+                                         (col * square_size + square_size - 55,row * square_size + 55), 15)
+                pygame.draw.line(screen, (0, 0, 0), (col * square_size + 55, row * square_size + 55),
+                                         (col * square_size + square_size - 55, row * square_size + square_size - 55), 15)
 
 
 def draw_lines():
@@ -146,8 +147,8 @@ def main():
                 x = event.pos[0]
                 y = event.pos[1]
 
-                col = x // 200
-                row = y // 200
+                col = x // square_size
+                row = y // square_size
 
                 if not game.play(row, col):
                     break
