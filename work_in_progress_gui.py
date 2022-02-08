@@ -6,19 +6,18 @@ pygame.font.init()
 
 font = pygame.font.SysFont('Times New Roman', 30)
 width = 600
-heigth = 600
-red = (255, 0, 0)
+height = 600
 black = (0, 0, 0)
 background = (28, 170, 156)
 
-screen = pygame.display.set_mode((width, heigth))
+screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Noughts and crosses')
 screen.fill(background)
 
-board = [
-        [' ', ' ', ' '],
-        [' ', ' ', ' '],
-        [' ', ' ', ' ']]
+grid = [
+    [' ', ' ', ' '],
+    [' ', ' ', ' '],
+    [' ', ' ', ' ']]
 
 
 class Game:
@@ -38,7 +37,7 @@ class Game:
                     print(self.board[i][j])
                 else:
                     print(self.board[i][j] + ' ', end='')
-    
+
     def is_illegal(self, x_axis, y_axis):
         if x_axis < 0 or x_axis > 2 or y_axis < 0 or y_axis > 2:
             return True
@@ -56,7 +55,7 @@ class Game:
 
             elif self.board[i] == ['0', '0', '0']:
                 return '0'
-        
+
             elif [item[i] for item in self.board] == ['0', '0', '0']:
                 return '0'
 
@@ -83,13 +82,11 @@ class Game:
         self.draw_figures()
         self.first, self.last = self.last, self.first
 
-
         if self.is_full():
             screen.fill(background)
             textsurface = font.render('Board is full. Game is lost :(', False, (0, 0, 0))
             screen.blit(textsurface, (140, 270))
             return False
-
 
         match self.winner():
             case 'X':
@@ -107,15 +104,20 @@ class Game:
 
         return True
 
-    def draw_figures(self):
-        for row in range(3):
-            for col in range(3):
-                if board[row][col] == '0':
-                    pygame.draw.circle(screen, (255, 255, 255), (int(col * 200 + 200 // 2), int(row * 200 + 200 // 2)), 60, 15)
 
-                elif board[row][col] == 'X':
-                    pygame.draw.line(screen, (0, 0, 0), (col * 200 + 55, row * 200 + 200 - 55), (col * 200 + 200 - 55, row * 200 + 55), 15)
-                    pygame.draw.line(screen, (0, 0, 0), (col * 200 + 55, row * 200 + 55), (col * 200 + 200 - 55, row * 200 + 200 - 55), 15)
+def draw_figures(self):
+    for row in range(3):
+        for col in range(3):
+            if grid[row][col] == '0':
+                pygame.draw.circle(screen, (255, 255, 255), (int(col * 200 + 200 // 2), int(row * 200 + 200 // 2)),
+                                   60, 15)
+
+            elif grid[row][col] == 'X':
+                pygame.draw.line(screen, (0, 0, 0), (col * 200 + 55, row * 200 + 200 - 55), (col * 200 + 200 - 55,
+                                                                                             row * 200 + 55), 15)
+                pygame.draw.line(screen, (0, 0, 0), (col * 200 + 55, row * 200 + 55), (col * 200 + 200 - 55,
+                                                                                       row * 200 + 200 - 55), 15)
+
 
 def draw_lines():
     pygame.draw.line(screen, black, (200, 0), (200, 600), 5)
@@ -125,7 +127,6 @@ def draw_lines():
 
 
 def main():
-
     start = random.choice(['X', '0'])
 
     if start == 'X':
@@ -133,7 +134,7 @@ def main():
     elif '0':
         last = 'X'
 
-    game = Game(start, last, board)
+    game = Game(start, last, grid)
     draw_lines()
 
     while True:
