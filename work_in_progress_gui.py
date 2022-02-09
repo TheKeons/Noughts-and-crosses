@@ -8,8 +8,11 @@ font = pygame.font.SysFont('Times New Roman', 30)
 width = 600
 height = 600
 black = (0, 0, 0)
-background = (28, 170, 156)
+background = (53, 84, 42)
 square_size = 200
+white = (255, 255, 255)
+lines = (77, 97, 110)
+
 
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Noughts and crosses')
@@ -110,21 +113,21 @@ def draw_figures():
     for row in range(3):
         for col in range(3):
             if grid[row][col] == '0':
-                pygame.draw.circle(screen, (255, 255, 255), (int(col * square_size + square_size // 2),
+                pygame.draw.circle(screen, white, (int(col * square_size + square_size // 2),
                                            int(row * square_size + square_size // 2)), 60, 15)
 
             elif grid[row][col] == 'X':
-                pygame.draw.line(screen, (0, 0, 0), (col * square_size + 55, row * square_size + square_size - 55),
+                pygame.draw.line(screen, black, (col * square_size + 55, row * square_size + square_size - 55),
                                          (col * square_size + square_size - 55,row * square_size + 55), 15)
-                pygame.draw.line(screen, (0, 0, 0), (col * square_size + 55, row * square_size + 55),
+                pygame.draw.line(screen, black, (col * square_size + 55, row * square_size + 55),
                                          (col * square_size + square_size - 55, row * square_size + square_size - 55), 15)
 
 
 def draw_lines():
-    pygame.draw.line(screen, black, (200, 0), (200, 600), 5)
-    pygame.draw.line(screen, black, (400, 0), (400, 600), 5)
-    pygame.draw.line(screen, black, (0, 200), (600, 200), 5)
-    pygame.draw.line(screen, black, (0, 400), (600, 400), 5)
+    pygame.draw.line(screen, lines, (200, 0), (200, 600), 5)
+    pygame.draw.line(screen, lines, (400, 0), (400, 600), 5)
+    pygame.draw.line(screen, lines, (0, 200), (600, 200), 5)
+    pygame.draw.line(screen, lines, (0, 400), (600, 400), 5)
 
 
 def main():
