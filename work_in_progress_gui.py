@@ -109,6 +109,10 @@ class Game:
         return True
 
 
+def restart():
+    pass
+
+
 def draw_figures():
     for row in range(3):
         for col in range(3):
