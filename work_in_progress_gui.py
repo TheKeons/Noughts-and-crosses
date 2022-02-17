@@ -3,7 +3,6 @@ import sys
 import random
 import time
 
-
 pygame.font.init()
 
 font = pygame.font.SysFont('Times New Roman', 30)
@@ -13,9 +12,8 @@ black = (14, 58, 83)
 lines = (14, 58, 83)
 square_size = 200
 white = (255, 255, 255)
-background = (162,228,184)
+background = (162, 228, 184)
 button = [230, 360, 140, 40]
-
 
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Noughts and crosses')
@@ -100,8 +98,9 @@ class Game:
         if self.winner():
             time.sleep(1)
             screen.fill(background)
-            text_surface = font.render(f'{"Noughts" if self.winner() == "0" else "Crosses"} has won the game', False, lines)
-            text_rect = text_surface.get_rect(center=(width/2, height/2))
+            text_surface = font.render(f'{"Noughts" if self.winner() == "0" else "Crosses"} has won the game',
+                                       False, lines)
+            text_rect = text_surface.get_rect(center=(width / 2, height / 2))
             screen.blit(text_surface, text_rect)
             self.won = True
             return False
@@ -110,14 +109,13 @@ class Game:
             time.sleep(1)
             screen.fill(background)
             text_surface = font.render('Board is full. Game is lost :(', False, lines)
-            
-            text_rect = text_surface.get_rect(center=(width/2, height/2))
+
+            text_rect = text_surface.get_rect(center=(width / 2, height / 2))
             screen.blit(text_surface, text_rect)
             self.won = True
             return False
 
         return True
-
 
     def draw_figures(self):
         for row in range(3):
@@ -125,13 +123,13 @@ class Game:
 
                 if self.board[row][col] == '0':
                     pygame.draw.circle(screen, white, (int(col * square_size + square_size // 2),
-                                            int(row * square_size + square_size // 2)), 60, 15)
+                                                       int(row * square_size + square_size // 2)), 60, 15)
 
                 elif self.board[row][col] == 'X':
                     pygame.draw.line(screen, black, (col * square_size + 55, row * square_size + square_size - 55),
-                                            (col * square_size + square_size - 55,row * square_size + 55), 15)
+                                     (col * square_size + square_size - 55, row * square_size + 55), 15)
                     pygame.draw.line(screen, black, (col * square_size + 55, row * square_size + 55),
-                                            (col * square_size + square_size - 55, row * square_size + square_size - 55), 15)
+                                     (col * square_size + square_size - 55, row * square_size + square_size - 55), 15)
 
 
 def draw_lines():
@@ -144,9 +142,9 @@ def draw_lines():
 def play_again(x, y):
     pygame.draw.rect(screen, lines, button)
     text_surface = font.render('Play Again', False, background)
-    text_rect = text_surface.get_rect(center=(width/2, 380))
+    text_rect = text_surface.get_rect(center=(width / 2, 380))
     screen.blit(text_surface, text_rect)
-    if button[0] <= x <= button[0] + 140 and button[1] <= y <= button[1] + 40:    
+    if button[0] <= x <= button[0] + 140 and button[1] <= y <= button[1] + 40:
         return True
 
 
@@ -160,9 +158,9 @@ def main():
         last = 'X'
 
     game = Game(start, last, False, [
-                            [' ', ' ', ' '],
-                            [' ', ' ', ' '],
-                            [' ', ' ', ' ']])
+        [' ', ' ', ' '],
+        [' ', ' ', ' '],
+        [' ', ' ', ' ']])
     draw_lines()
 
     while True:
@@ -175,9 +173,9 @@ def main():
                 y = event.pos[1]
 
                 if not game.play(x, y):
-                    if play_again(x, y):     
+                    if play_again(x, y):
                         main()
-                    
+
         pygame.display.update()
 
 
