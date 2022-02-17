@@ -1,17 +1,20 @@
 import pygame
 import sys
 import random
+import time
+
 
 pygame.font.init()
 
 font = pygame.font.SysFont('Times New Roman', 30)
 width = 600
 height = 600
-black = (0, 0, 0)
-background = (53, 84, 42)
+black = (14, 58, 83)
+lines = (14, 58, 83)
 square_size = 200
 white = (255, 255, 255)
-lines = (77, 97, 110)
+background = (162,228,184)
+button = [230, 360, 140, 40]
 
 
 screen = pygame.display.set_mode((width, height))
@@ -25,10 +28,11 @@ grid = [
 
 
 class Game:
-    def __init__(self, first, last, board):
+    def __init__(self, first, last, won, board):
         self.first = first
         self.last = last
         self.board = board
+        self.won = won
 
     def show_board(self):
         for i in range(len(self.board)):
@@ -78,53 +82,56 @@ class Game:
         if ' ' not in [val for sublist in self.board for val in sublist]:
             return True
 
-    def play(self, row, col):
-        if self.is_illegal(row, col):
-            return
+    def play(self, x, y):
+        col = x // square_size
+        row = y // square_size
 
-        self.board[row][col] = self.first
-        draw_figures()
-        self.first, self.last = self.last, self.first
-
-        if self.is_full():
-            screen.fill(background)
-            text_surface = font.render('Board is full. Game is lost :(', False, (0, 0, 0))
-            screen.blit(text_surface, (140, 270))
+        if self.won:
             return False
 
-        match self.winner():
-            case 'X':
-                screen.fill(background)
-                text_surface = font.render('X has won the game', False, (0, 0, 0))
-                screen.blit(text_surface, (170, 270))
+        if self.is_illegal(row, col):
+            return True
 
-            case '0':
-                screen.fill(background)
-                text_surface = font.render('O has won the game', False, (0, 0, 0))
-                screen.blit(text_surface, (170, 270))
+        self.board[row][col] = self.first
+        self.draw_figures()
+        pygame.display.update()
+        self.first, self.last = self.last, self.first
 
-            case False:
-                pass
+        if self.winner():
+            time.sleep(1)
+            screen.fill(background)
+            text_surface = font.render(f'{"Noughts" if self.winner() == "0" else "Crosses"} has won the game', False, lines)
+            text_rect = text_surface.get_rect(center=(width/2, height/2))
+            screen.blit(text_surface, text_rect)
+            self.won = True
+            return False
+
+        if self.is_full():
+            time.sleep(1)
+            screen.fill(background)
+            text_surface = font.render('Board is full. Game is lost :(', False, lines)
+            
+            text_rect = text_surface.get_rect(center=(width/2, height/2))
+            screen.blit(text_surface, text_rect)
+            self.won = True
+            return False
 
         return True
 
 
-def restart():
-    pass
+    def draw_figures(self):
+        for row in range(3):
+            for col in range(3):
 
+                if self.board[row][col] == '0':
+                    pygame.draw.circle(screen, white, (int(col * square_size + square_size // 2),
+                                            int(row * square_size + square_size // 2)), 60, 15)
 
-def draw_figures():
-    for row in range(3):
-        for col in range(3):
-            if grid[row][col] == '0':
-                pygame.draw.circle(screen, white, (int(col * square_size + square_size // 2),
-                                           int(row * square_size + square_size // 2)), 60, 15)
-
-            elif grid[row][col] == 'X':
-                pygame.draw.line(screen, black, (col * square_size + 55, row * square_size + square_size - 55),
-                                         (col * square_size + square_size - 55,row * square_size + 55), 15)
-                pygame.draw.line(screen, black, (col * square_size + 55, row * square_size + 55),
-                                         (col * square_size + square_size - 55, row * square_size + square_size - 55), 15)
+                elif self.board[row][col] == 'X':
+                    pygame.draw.line(screen, black, (col * square_size + 55, row * square_size + square_size - 55),
+                                            (col * square_size + square_size - 55,row * square_size + 55), 15)
+                    pygame.draw.line(screen, black, (col * square_size + 55, row * square_size + 55),
+                                            (col * square_size + square_size - 55, row * square_size + square_size - 55), 15)
 
 
 def draw_lines():
@@ -134,7 +141,17 @@ def draw_lines():
     pygame.draw.line(screen, lines, (0, 400), (600, 400), 5)
 
 
+def play_again(x, y):
+    pygame.draw.rect(screen, lines, button)
+    text_surface = font.render('Play Again', False, background)
+    text_rect = text_surface.get_rect(center=(width/2, 380))
+    screen.blit(text_surface, text_rect)
+    if button[0] <= x <= button[0] + 140 and button[1] <= y <= button[1] + 40:    
+        return True
+
+
 def main():
+    screen.fill(background)
     start = random.choice(['X', '0'])
 
     if start == 'X':
@@ -142,7 +159,10 @@ def main():
     elif '0':
         last = 'X'
 
-    game = Game(start, last, grid)
+    game = Game(start, last, False, [
+                            [' ', ' ', ' '],
+                            [' ', ' ', ' '],
+                            [' ', ' ', ' ']])
     draw_lines()
 
     while True:
@@ -154,12 +174,10 @@ def main():
                 x = event.pos[0]
                 y = event.pos[1]
 
-                col = x // square_size
-                row = y // square_size
-
-                if not game.play(row, col):
-                    break
-
+                if not game.play(x, y):
+                    if play_again(x, y):     
+                        main()
+                    
         pygame.display.update()
 
 
