@@ -8,9 +8,8 @@ pygame.font.init()
 font = pygame.font.SysFont('Times New Roman', 30)
 width = 600
 height = 600
-black = (14, 58, 83)
 lines = (14, 58, 83)
-square_size = 200
+square_size = width // 3
 white = (255, 255, 255)
 background = (162, 228, 184)
 button = [230, 360, 140, 40]
@@ -18,11 +17,6 @@ button = [230, 360, 140, 40]
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Noughts and crosses')
 screen.fill(background)
-
-grid = [
-    [' ', ' ', ' '],
-    [' ', ' ', ' '],
-    [' ', ' ', ' ']]
 
 
 class Game:
@@ -32,22 +26,7 @@ class Game:
         self.board = board
         self.won = won
 
-    def show_board(self):
-        for i in range(len(self.board)):
-            if i != 0:
-                print('--------')
-            for j in range(len(self.board[0])):
-                if j != 0:
-                    print('|', end='')
-                if j == 2:
-                    print(self.board[i][j])
-                else:
-                    print(self.board[i][j] + ' ', end='')
-
     def is_illegal(self, x_axis, y_axis):
-        if x_axis < 0 or x_axis > 2 or y_axis < 0 or y_axis > 2:
-            return True
-
         if self.board[x_axis][y_axis] != ' ':
             return True
 
@@ -126,17 +105,17 @@ class Game:
                                                        int(row * square_size + square_size // 2)), 60, 15)
 
                 elif self.board[row][col] == 'X':
-                    pygame.draw.line(screen, black, (col * square_size + 55, row * square_size + square_size - 55),
+                    pygame.draw.line(screen, lines, (col * square_size + 55, row * square_size + square_size - 55),
                                      (col * square_size + square_size - 55, row * square_size + 55), 15)
-                    pygame.draw.line(screen, black, (col * square_size + 55, row * square_size + 55),
+                    pygame.draw.line(screen, lines, (col * square_size + 55, row * square_size + 55),
                                      (col * square_size + square_size - 55, row * square_size + square_size - 55), 15)
 
 
 def draw_lines():
-    pygame.draw.line(screen, lines, (200, 0), (200, 600), 5)
-    pygame.draw.line(screen, lines, (400, 0), (400, 600), 5)
-    pygame.draw.line(screen, lines, (0, 200), (600, 200), 5)
-    pygame.draw.line(screen, lines, (0, 400), (600, 400), 5)
+    for i in range(600):
+        if i % square_size == 0 and i != 0 and i != 600:
+            pygame.draw.line(screen, lines, (i, 0), (i, 600), 5)
+            pygame.draw.line(screen, lines, (0, i), (600, i), 5)
 
 
 def play_again(x, y):
