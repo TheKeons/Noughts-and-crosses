@@ -56,9 +56,11 @@ class Snake:
     def move_snake(self, direction):
         match direction:
             case 'left':
-                rotate_img_left(self.draw_head)
+                rotate_img_left(self.head)
                 game.draw_board()
                 self.draw_snake()
+                pygame.display.update()
+                print('t')
 
 
 def rotate_img_right(img):
@@ -71,16 +73,16 @@ def rotate_img_left(img):
 game = Board(grid_list)
 snek = Snake()
 direction = None
+game.draw_board()
+snek.draw_snake()
 
 while True:
-    game.draw_board()
-    snek.draw_snake()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         if event.type == pygame.KEYDOWN:
-            match pygame.key:
+            match event.key:
                 case pygame.K_UP:
                     direction = 'up'
                 case pygame.K_DOWN:
@@ -89,6 +91,15 @@ while True:
                     direction = 'left'
                 case pygame.K_RIGHT:
                     direction = 'right'
+                case pygame.K_w:
+                    direction = 'up'
+                case pygame.K_s:
+                    direction = 'down'
+                case pygame.K_a:
+                    direction = 'left'
+                case pygame.K_d:
+                    direction = 'right'
 
     snek.move_snake(direction)
     pygame.display.update()
+    direction = None
